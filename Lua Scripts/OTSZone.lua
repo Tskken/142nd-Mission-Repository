@@ -26,78 +26,154 @@ do
             bfm = "ots-mig29-bfm-group",
         },
     }
+    OTSMenu.coalition = coalition.side.BLUE
 
-    -- Create OTS F10 Menu for given group
-    function OTSMenu:buildOTSMenu(group)
-        -- Create root F10 Menu for OTS
-        local root = missionCommands.addSubMenuForGroup(group, "OTS Menu")
+    function OTSMenu:createSAMMenu(root)
+         -- Create Sub Menu for SAM targets
+         local sam = missionCommands.addSubMenuForCoalition(self.coalition, "SAM", root)
 
-        -- Create Sub Menu for SAM targets
-        local sam = missionCommands.addSubMenuForGroup(group, "SAM", root)
+         -- Create SAM spawn options in SAM menu
+         -- Spawn units
+         missionCommands.addCommandForCoalition(self.coalition, "Spawn SA15", sam, function() 
+             self:spawnOTSTargetGroup(self.units.sam.sa15)
+         end)
+         missionCommands.addCommandForCoalition(self.coalition, "Spawn SA11", sam, function() 
+             self:spawnOTSTargetGroup(self.units.sam.sa11)
+         end)
+         missionCommands.addCommandForCoalition(self.coalition, "Spawn SA2", sam, function() 
+             self:spawnOTSTargetGroup(self.units.sam.sa2)
+         end)
+         -- Despawn units
+         missionCommands.addCommandForCoalition(self.coalition, "Despawn SA15", sam, function() 
+             self:despawnOTSTargetGroup(self.units.sam.sa15)
+         end)
+         missionCommands.addCommandForCoalition(self.coalition, "Despawn SA11", sam, function() 
+             self:despawnOTSTargetGroup(self.units.sam.sa11)
+         end)
+         missionCommands.addCommandForCoalition(self.coalition, "Despawn SA2", sam, function() 
+             self:despawnOTSTargetGroup(self.units.sam.sa2)
+         end)
+    end
 
-        -- Create SAM spawn options in SAM menu
-        missionCommands.addCommandForGroup(group, "Spawn SA15", sam, function() 
-            self.spawnOTSTargetGroup(self.units.sam.sa15)
-        end)
-        missionCommands.addCommandForGroup(group, "Spawn SA11", sam, function() 
-            self.spawnOTSTargetGroup(self.units.sam.sa11)
-        end)
-        missionCommands.addCommandForGroup(group, "Spawn SA2", sam, function() 
-            self.spawnOTSTargetGroup(self.units.sam.sa2)
-        end)
-
+    function OTSMenu:createArmorMenu(root)
         -- Create Sub Menu for Armor targets
-        local armor = missionCommands.addSubMenuForGroup(group, "Armor", root)
+        local armor = missionCommands.addSubMenuForCoalition(self.coalition, "Armor", root)
 
         -- Create Armor spawn options in Armor menu
-        missionCommands.addCommandForGroup(group, "Spawn Heavy Armor", armor, function() 
-            self.spawnOTSTargetGroup(self.units.armor.heavy)
+        -- Spawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Heavy Armor", armor, function() 
+            self:spawnOTSTargetGroup(self.units.armor.heavy)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn Medium Armor", armor, function() 
-            self.spawnOTSTargetGroup(self.units.armor.medium)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Medium Armor", armor, function() 
+            self:spawnOTSTargetGroup(self.units.armor.medium)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn Light Armor", armor, function() 
-            self.spawnOTSTargetGroup(self.units.armor.light)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Light Armor", armor, function() 
+            self:spawnOTSTargetGroup(self.units.armor.light)
         end)
+        -- Despawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Heavy Armor", armor, function() 
+            self:despawnOTSTargetGroup(self.units.armor.heavy)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Medium Armor", armor, function() 
+            self:despawnOTSTargetGroup(self.units.armor.medium)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Light Armor", armor, function() 
+            self:despawnOTSTargetGroup(self.units.armor.light)
+        end)
+    end
 
+    function OTSMenu:createInfMenu(root)
         -- Create Sub Menu for infantry targets
-        local inf = missionCommands.addSubMenuForGroup(group, "Infantry", root)
+        local inf = missionCommands.addSubMenuForCoalition(self.coalition, "Infantry", root)
 
         -- Create Infentry spawn options for Infentry menu
-        missionCommands.addCommandForGroup(group, "Spawn Infantry", inf, function() 
-            self.spawnOTSTargetGroup(self.units.infantry.inf)
+        -- Spawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Infantry", inf, function() 
+            self:spawnOTSTargetGroup(self.units.infantry.inf)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn Infantry w/ Mandpad", inf, function() 
-            self.spawnOTSTargetGroup(self.units.infantry.manpad)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Infantry w/ Mandpad", inf, function() 
+            self:spawnOTSTargetGroup(self.units.infantry.manpad)
         end)
+        -- Despawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Infantry", inf, function() 
+            self:despawnOTSTargetGroup(self.units.infantry.inf)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Infantry w/ Mandpad", inf, function() 
+            self:despawnOTSTargetGroup(self.units.infantry.manpad)
+        end)
+    end
 
+    function OTSMenu:createAAAMenu(root)
         -- Create Sub Menu for AAA targets
-        local aaa = missionCommands.addSubMenuForGroup(group, "AAA", root)
+        local aaa = missionCommands.addSubMenuForCoalition(self.coalition, "AAA", root)
 
         -- Create AAA spawn options for AAA menu
-        missionCommands.addCommandForGroup(group, "Spawn Radar AAA", aaa, function() 
-            self.spawnOTSTargetGroup(self.units.aaa.radar)
+        -- Spawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Radar AAA", aaa, function() 
+            self:spawnOTSTargetGroup(self.units.aaa.radar)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn Military AAA", aaa, function() 
-            self.spawnOTSTargetGroup(self.units.aaa.mil)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Military AAA", aaa, function() 
+            self:spawnOTSTargetGroup(self.units.aaa.mil)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn Insurgent AAA", aaa, function() 
-            self.spawnOTSTargetGroup(self.units.aaa.insur)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn Insurgent AAA", aaa, function() 
+            self:spawnOTSTargetGroup(self.units.aaa.insur)
         end)
+        -- Despawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Radar AAA", aaa, function() 
+            self:despawnOTSTargetGroup(self.units.aaa.radar)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Military AAA", aaa, function() 
+            self:despawnOTSTargetGroup(self.units.aaa.mil)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn Insurgent AAA", aaa, function() 
+            self:despawnOTSTargetGroup(self.units.aaa.insur)
+        end)
+    end
 
+    function OTSMenu:createAAMenu(root)
         -- Create Sub Menu for Air-Air targets
-        local air = missionCommands.addSubMenuForGroup(group, "Air-Air", root)
+        local air = missionCommands.addSubMenuForCoalition(self.coalition, "Air-Air", root)
 
         -- Create Air-Air spawn options for Air-Air menu
-        missionCommands.addCommandForGroup(group, "Spawn MiG 29 (BVR)", air, function() 
-            self.spawnOTSTargetGroup(self.units.aa.bvr)
+        -- Spawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn MiG 29 (BVR)", air, function() 
+            self:spawnOTSTargetGroup(self.units.aa.bvr)
         end)
-        missionCommands.addCommandForGroup(group, "Spawn MiG 29 (BFM)", air, function() 
-            self.spawnOTSTargetGroup(self.units.aaa.bfm)
+        missionCommands.addCommandForCoalition(self.coalition, "Spawn MiG 29 (BFM)", air, function() 
+            self:spawnOTSTargetGroup(self.units.aaa.bfm)
+        end)
+        -- Despawn units
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn MiG 29 (BVR)", air, function() 
+            self:despawnOTSTargetGroup(self.units.aa.bvr)
+        end)
+        missionCommands.addCommandForCoalition(self.coalition, "Despawn MiG 29 (BFM)", air, function() 
+            self:despawnOTSTargetGroup(self.units.aaa.bfm)
         end)
     end
 
     function OTSMenu:spawnOTSTargetGroup(group)
         mist.respawnInZone(group, self.zone, true, 500, {initTasks = true})
     end
+
+    function OTSMenu:despawnOTSTargetGroup(group)
+        local g = Group.getByName(group)
+        if g:isExist() then
+            g:destroy()
+        end
+    end
+
+    -- Create OTS F10 Menu
+    function OTSMenu:init()
+        -- Create root F10 Menu for OTS
+        local root = missionCommands.addSubMenuForCoalition(self.coalition, "OTS Menu")
+
+        -- Create each groups F10 menues
+        OTSMenu:createSAMMenu(root)
+        OTSMenu:createArmorMenu(root)
+        OTSMenu:createInfMenu(root)
+        OTSMenu:createAAAMenu(root)
+        OTSMenu:createAAMenu(root)
+    end
 end
+
+OTSMenu:init()
